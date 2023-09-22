@@ -66,15 +66,6 @@ Required libraries for Python along with their version numbers used while making
 
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
-## 2. Training parameters and results
-
-#### NOTE
-
-- `batch_size=64` took ~14GB GPU memory in case of *InceptionV3 + AlternativeRNN* and *VGG16 + AlternativeRNN*
-- `batch_size=64` took ~8GB GPU memory in case of *InceptionV3 + RNN* and *VGG16 + RNN*
-- **If you're low on memory**, use google colab or reduce batch size
-- In case of BEAM Search, `loss` and `val_loss` are same as in case of argmax since the model is same
-
 | Model & Config | Argmax | BEAM Search |
 | :--- | :--- | :--- |
 | **InceptionV3 + AlternativeRNN** <ul><li>Epochs = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.606086</li><li>BLEU-2: 0.359171</li><li>BLEU-3: 0.249124</li><li>BLEU-4: 0.126599</li></ul> |
@@ -92,24 +83,9 @@ Required libraries for Python along with their version numbers used while making
 | <img width="50%" src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/bikestunt.jpg" alt="Image 1"> | <ul><li><strong>Argmax:</strong> A man in a blue shirt is riding a bike on a dirt path.</li><li><strong>BEAM Search, k=3:</strong> A man is riding a bicycle on a dirt path.</li></ul>|
 | <img src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/surfing.jpeg" alt="Image 2"> | <ul><li><strong>Argmax:</strong> A man in a red kayak is riding down a waterfall.</li><li><strong>BEAM Search, k=3:</strong> A man on a surfboard is riding a wave.</li></ul>|
 
-## 4. Procedure to Train Model
 
-1. Clone the repository to preserve directory structure.<br>
-`git clone https://github.com/dabasajay/Image-Caption-Generator.git`
-2. Put the required dataset files in `train_val_data` folder (files mentioned in readme there).
-3. Review `config.py` for paths and other configurations (explained below).
-4. Run `train_val.py`.
 
-## 5. Procedure to Test on new images
-
-1. Clone the repository to preserve directory structure.<br>
-`git clone https://github.com/dabasajay/Image-Caption-Generator.git`
-2. Train the model to generate required files in `model_data` folder (steps given above).
-3. Put the test images in `test_data` folder.
-4. Review `config.py` for paths and other configurations (explained below).
-5. Run `test.py`.
-
-## 6. Configurations (config.py)
+## 4. Configurations (config.py)
 
 **config**
 
@@ -135,7 +111,7 @@ Required libraries for Python along with their version numbers used while making
 3. **`dense_units`** :- Number of Dense units in Decoder(RNN) Model
 4. **`dropout`** :- Dropout probability used in Dropout layer in Decoder(RNN) Model
 
-## 7. Frequently encountered problems
+## 5. Frequently encountered problems
 
 - **Out of memory issue**:
   - Try reducing `batch_size`
@@ -144,26 +120,6 @@ Required libraries for Python along with their version numbers used while making
 - **Results aren't very great using beam search compared to argmax**:
   - Try higher `k` in BEAM search using `beam_search_k` parameter in config. Note that higher `k` will improve results but it'll also increase inference time significantly.
 
-## 8. TODO
 
-- [X] Support for VGG16 Model. Uses InceptionV3 Model by default.
 
-- [X] Implement 2 architectures of RNN Model.
 
-- [X] Support for batch processing in data generator with shuffling.
-
-- [X] Implement BEAM Search.
-
-- [X] Calculate BLEU Scores using BEAM Search.
-
-- [ ] Implement Attention and change model architecture.
-
-- [ ] Support for pre-trained word vectors like word2vec, GloVe etc.
-
-## 9. References
-
-<ul type="square">
-	<li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Vinyals_Show_and_Tell_2015_CVPR_paper.pdf">Show and Tell: A Neural Image Caption Generator</a> - Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan</li>
-	<li><a href="https://arxiv.org/abs/1703.09137">Where to put the Image in an Image Caption Generator</a> - Marc Tanti, Albert Gatt, Kenneth P. Camilleri</li>
-	<li><a href="https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/">How to Develop a Deep Learning Photo Caption Generator from Scratch</a></li>
-</ul>
